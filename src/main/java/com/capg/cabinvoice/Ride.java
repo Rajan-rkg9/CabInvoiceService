@@ -2,8 +2,8 @@ package com.capg.cabinvoice;
 
 public class Ride {
 	
-	private final int time;
-	private double distance;
+	public final int time;
+	public double distance;
 	
 	public Ride(double distance, int time) {
 		this.time = time;
