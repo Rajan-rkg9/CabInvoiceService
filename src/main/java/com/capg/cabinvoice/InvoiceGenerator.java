@@ -2,23 +2,25 @@ package com.capg.cabinvoice;
 
 public class InvoiceGenerator {
 
-	private static final int COST_PER_TIME = 1;
-	private static final double MINIMUM_COST_PER_KILOMETER = 10;
-	private static final double MINIMUM_FARE = 5;
+	public RideRepository rideRepo;
 
-	public double calculateFare(double distance, int time) {
-		double totalFare = distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_TIME;
-		return Math.max(totalFare, MINIMUM_FARE);
-		
+	public void setRideRepository(RideRepository rideRepo) {
+		 this.rideRepo=rideRepo;
+	}
+	
+	public InvoiceSummary getInvoiceSummary(String userId) {
+		return this.calculateFare(rideRepo.getRides(userId));
 	}
 
 	public InvoiceSummary calculateFare(Ride[] rides) {
 		double totalFare = 0;
 		for(Ride ride : rides)
-		{
-			totalFare = totalFare + this.calculateFare(ride.distance , ride.time);
-		}
+			totalFare = totalFare + ride.cabRideEnum.calculateRideFare(ride);
+		
 		return new InvoiceSummary(rides.length, totalFare);
 	}
-
+	
+	public void addRides(String userId, Ride[] rides) {
+		rideRepo.addRide(userId, rides);
+	}
 }

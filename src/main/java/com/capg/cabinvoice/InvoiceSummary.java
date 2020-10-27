@@ -11,6 +11,10 @@ public class InvoiceSummary {
 		this.averageFare = this.totalFare/this.numberOfRides;
 	}
 	
+	public double getTotalFare() {
+		return totalFare;
+	}
+	
 	@Override
 	public boolean equals(Object o)
 	{
